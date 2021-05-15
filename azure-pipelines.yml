@@ -11,7 +11,7 @@ pool:
 
 stages:
   - stage: Provision
-    displayName: 'Terraforming on AWS...'    
+    displayName: 'Terraforming on AWS...'
     jobs:
     - job: Provision
       displayName: 'Provisioning Instance'
@@ -27,5 +27,5 @@ stages:
       name: 'RunTerraform'
       displayName: 'Run Terraform'
       env:
-        AWS_ACCESS_KEY_ID: $(ARM_CLIENT_ID)
-        AWS_SECRET_ACCESS_KEY: $(ARM_CLIENT_SECRET)                
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
