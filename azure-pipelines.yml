@@ -9,11 +9,23 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+  - stage: Provision
+    displayName: 'Terraforming on AWS...'    
+    jobs:
+    - job: Provision
+      displayName: 'Provisioning Instance'
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables: 
+      - group: TeraformEnvVars
+      steps:
+      - script: |
+          set -e
+          terraform init -input=false
+          terraform apply -input=false -auto-approve
+      name: 'RunTerraform'
+      displayName: 'Run Terraform'
+      env:
+        AWS_ACCESS_KEY_ID: $(ARM_CLIENT_ID)
+        AWS_SECRET_ACCESS_KEY: $(ARM_CLIENT_SECRET)                
